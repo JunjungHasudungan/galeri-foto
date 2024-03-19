@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Genaral\PostController;
+use App\Http\Controllers\Genaral\{PostController, CommentController, LikeController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +22,8 @@ Route::view('dashboard', 'dashboard')
 
 Route::resources([
     'galeri-foto'   => PostController::class,
+    'replies'      => CommentController::class,
+    'likes'        => LikeController::class,
 ]);
 
 Route::view('profile', 'profile')

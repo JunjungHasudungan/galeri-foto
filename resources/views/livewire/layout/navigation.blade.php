@@ -37,6 +37,14 @@ new class extends Component
                     <x-nav-link :href="route('galeri-foto.index')" :active="request()->routeIs('galeri-foto.index')" wire:navigate>
                         {{ __('Galeri Foto') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('replies.index')" :active="request()->routeIs('replies.index')" wire:navigate>
+                        {{ __('Balasan / Komentar') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('likes.index')" :active="request()->routeIs('likes.index')" wire:navigate>
+                        {{ __('Suka') }}
+                    </x-nav-link>
                 </div>
             </div>
 
