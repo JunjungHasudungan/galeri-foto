@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             DepartementSeeder::class,
             UserSeeder::class,
+            PostSeeder::class,
+            CommentSeeder::class,
+            LikeSeeder::class,
         ]);
     }
 }

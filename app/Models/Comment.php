@@ -12,7 +12,7 @@ class Comment extends Model
     protected $table = 'comments';
 
     protected $fillable = [
-        'konten', 'user_id',
+        'konten', 'user_id', 'post_id'
     ];
 
     protected $guarded = [];
@@ -24,6 +24,6 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->belongTo(Comment::class);
+        return $this->belongsTo(Post::class);
     }
 }
