@@ -14,8 +14,7 @@ class Likes extends Component
         return view('livewire.likes'
         ,[
             'userLike'  => Like::with(['user', 'post'])
-                ->where('user_id', auth()->user()->id)
-                ->where('like', 1)->get()
+                ->where('user_id', auth()->user()->id)->get()
         ]
     );
     }

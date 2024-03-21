@@ -36,7 +36,7 @@ class Posts extends Component
         $this->keterangan = '';
     }
 
-    public function createUser() 
+    public function createPost() 
     {
         $this->openModalCreate();
 
