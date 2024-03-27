@@ -24,7 +24,7 @@ class Dashboard extends Component
 
     public function render()
     {
-        $listPost = Post::with(['user', 'likes', 'comments'])->get();
+        $listPost = Post::with(['user', 'likes', 'comments'])->whereNot('user_id', auth()->user()->id)->get();
 
         return view('livewire.dashboard',[
             'listPost'  => $listPost,
@@ -63,16 +63,20 @@ class Dashboard extends Component
         $this->resetField();
     }
 
-    public function storeLikePost(Post $post)
+    public function storeLikePost($post_id)
     {
+        $userLikePost = Like::where('post_id', $post_id)->where('user_id', auth()->user()->id)->first();
         
-        $like = Like::create([
-            'post_id'   => $post->id,
-            'user_id'   => auth()->user()->id,
-            'status'      => true,
-        ]);
-
-        $like->save();
+        if (!$userLikePost) {
+            Like::create([
+                'post_id'   => $post_id,
+                'user_id'   => auth()->user()->id,
+                'status'      => true,
+            ]);
+        } else {
+            $likePost = Like::find($userLikePost['id']);
+            $likePost->delete();
+        }
     }
 
     public function resetField()
