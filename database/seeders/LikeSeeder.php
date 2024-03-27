@@ -19,7 +19,7 @@ class LikeSeeder extends Seeder
             $likes[] = [
                 'post_id'   => random_int(1, 6),
                 'user_id'   => random_int(1, 6),
-                'like'      => (bool)rand(0, 1),
+                'status'      => (bool)rand(0, 1),
             ];
         }
 

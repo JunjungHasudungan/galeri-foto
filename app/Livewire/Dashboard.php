@@ -38,6 +38,8 @@ class Dashboard extends Component
 
     public function closeModalCreate()
     {
+        $this->reset('konten', 'post_id', 'user_id');
+
         return $this->is_create = false;
     }
 
@@ -48,7 +50,7 @@ class Dashboard extends Component
         $this->openModalCreate();
 
         $this->resetField();
-        
+
         $this->post = Post::with('user')->where('id', $id_post)->get();
 
         foreach($this->post as $post) {
@@ -59,6 +61,18 @@ class Dashboard extends Component
             $this->keterangan = $post->keterangan;
         }
         $this->resetField();
+    }
+
+    public function storeLikePost(Post $post)
+    {
+        
+        $like = Like::create([
+            'post_id'   => $post->id,
+            'user_id'   => auth()->user()->id,
+            'status'      => true,
+        ]);
+
+        $like->save();
     }
 
     public function resetField()
@@ -78,7 +92,6 @@ class Dashboard extends Component
             'konten.required'    => 'judul wajib diisi..',
         ]);
         
-        $comment = new Comment();
         // melakukan insert data dari pengiriman data properti yang ada
         $comment = Comment::create([
             'konten'            => $this->konten,

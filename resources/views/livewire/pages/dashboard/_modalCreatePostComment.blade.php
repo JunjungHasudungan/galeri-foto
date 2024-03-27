@@ -21,7 +21,7 @@
                                     {{$author->name }} . {{ \Carbon\Carbon::parse($created_at)->translatedFormat('j M') }}
                                 </p>
                             </div>
-                            <div class="items-center justify-between p-4 border border-gray-200 rounded-lg shadow-sm sm:flex bg-stone-400 dark:border-gray-600">
+                            <div class="items-center justify-between p-4 border border-gray-200 rounded-lg shadow-sm sm:flex bg-gray-400 dark:border-gray-600">
                                 <div class="text-sm font-normal text-gray-500 dark:text-gray-300">
                                     {{ $post->keterangan }}
                                 </div>
@@ -81,18 +81,6 @@
 </div>
 @push('scripts')
 <script>
-    // const inputKonten = document.getElementById('konten');
-    // const btnStoreComment = document.getElementById('btnStoreCommentPost');
-    // inputKonten.addEventListener("keyup", function(e){
-    //     btnStoreComment = .currentTarget.value;
-
-    //     if(value == "") {
-    //         btnStoreComment.disable = true;
-    //     }else {
-    //         btnStoreComment.disable = false;
-    //     }
-
-    // });
 
     document.addEventListener('livewire:load', function () {
         Livewire.on('toggleButton', (isDisabled) => {

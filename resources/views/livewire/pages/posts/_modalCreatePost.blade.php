@@ -11,10 +11,8 @@
           <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
             <form>
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="">
-                    {{-- inputan judul konten --}}
-                    <div class="mb-4">
-                    <label for="judul" class="block text-gray-700 text-sm font-bold mb-2">Judul </label>
+                {{-- inputan judul konten --}}
+                <div class="mb-4">
                     <input type="text"
                     wire:model="judul"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -25,14 +23,12 @@
                 {{-- end inputan konten --}}
 
                 {{-- inputan judul konten --}}
-                <div class="">
-                    <div class="mb-4">
-                        <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Keterangan</label>
-                        <textarea   id="message" 
-                                    rows="4" 
-                                    class="block p-2.5 w-full text-sm text-gray-700 rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apa yang anda pikirkan...">
-
-                        </textarea>
+                <div class="mb-4">
+                    <textarea   
+                        id="message" 
+                        wire:model="keterangan" 
+                        class="block p-2.5 w-full text-sm text-gray-700 rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apa yang anda pikirkan...">
+                    </textarea>
                     @error('judul') <span class="text-red-500">{{ $message }}</span>@enderror
                 </div>
 
@@ -43,7 +39,7 @@
                     @error('judul') <span class="text-red-500">{{ $message }}</span>@enderror
                 </div>
 
-              </div>
+                </div>
             </div>
 
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -74,3 +70,18 @@
         </div>
       </div>
 </div>
+
+@push('scripts')
+<script>
+
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('toggleButton', (isDisabled) => {
+            window.livewire.myLivewireComponent.isDisabled = isDisabled;
+        });
+    });
+    document.addEventListener('livewire:load', function () {
+        const messageTextarea = document.querySelector('[x-ref="message"]');
+        @this.focusTextarea && messageTextarea.focus();
+    });
+</script>
+@endpush

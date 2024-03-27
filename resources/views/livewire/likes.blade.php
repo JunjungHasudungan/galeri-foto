@@ -27,7 +27,10 @@
                     <label class="text-base item-center self-center"> {{ count($like->post->comments) ?? 0 }} </label>
                 </div>
                 <div class="flex flex-row space-x-1 p-2">
-                    <button type="button" class="text-blue-700 focus:outline-none focus:ring-blue-300 rounded-lg hover:red-700 hover:text-white font-medium text-xs p-2 text-center inline-flex items-center  dark:text-blue-500 dark:hover:text-white  dark:hover:bg-blue-400">
+                    <button 
+                        wire:click="likePost( {{ $like->id }} )"
+                        type="button" 
+                        class="text-blue-700 focus:outline-none focus:ring-blue-300 rounded-lg hover:red-700 hover:text-white font-medium text-xs p-2 text-center inline-flex items-center  dark:text-blue-500 dark:hover:text-white  dark:hover:bg-blue-400">
                         @php
                             $fillColor = count($like->post->likes) > 0 ? 'red' : 'none'; 
                         @endphp
