@@ -13,9 +13,19 @@ class CommentReply extends Model
 
     protected $guarded = [];
 
-    public function commentReplies()
+    public function comment()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(Comment::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function userLikeReply()

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Comment;
+use App\Models\CommentReply;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comment_replies', function (Blueprint $table) {
+        Schema::create('replies', function (Blueprint $table) {
             $table->id();
-            $table->string('konten_reply')->nullable();
-            $table->boolean('like')->default(false);
-            $table->foreignIdFor(Comment::class);
+            $table->string('description');
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(CommentReply::class);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comment_replies');
+        Schema::dropIfExists('replies');
     }
 };
