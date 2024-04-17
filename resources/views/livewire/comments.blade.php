@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="flex flex-row space-x-1 p-2">
                                     <button
-                                            wire:click="closeModalCommentReply()"
+                                            wire:click="likeComment({{ $comment->id }})"
                                             type="button" class="text-blue-700 focus:outline-none focus:ring-blue-300 rounded-lg hover:red-700 hover:text-white font-medium text-xs p-2 text-center inline-flex items-center  dark:text-blue-500 dark:hover:text-white  dark:hover:bg-blue-400">
                                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 18 18">
                                         <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
@@ -103,10 +103,10 @@
                                             {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('j M') }}
                                         </time>
                                         <div class="text-sm mx-2 font-semibold text-gray-500 lex dark:text-gray-300">
-                                            {{ $user->name }}                                        
+                                            {{ $user->name }}
                                         </div>
                                     </div>
-                                    
+
                                     <div class="px-2.5 mb-2"> {{ $item->konten_reply }} </div>
 
                                     {{-- tombol comment dan like --}}
@@ -126,7 +126,7 @@
                                         </div>
                                         <div class="flex flex-row space-x-1 p-2">
                                             <button
-                                                    wire:click="closeModalCommentReply()"
+                                                    wire:click="likeReplyComment()"
                                                     type="button" class="text-blue-700 focus:outline-none focus:ring-blue-300 rounded-lg hover:red-700 hover:text-white font-medium text-xs p-2 text-center inline-flex items-center  dark:text-blue-500 dark:hover:text-white  dark:hover:bg-blue-400">
                                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 18 18">
                                                 <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>

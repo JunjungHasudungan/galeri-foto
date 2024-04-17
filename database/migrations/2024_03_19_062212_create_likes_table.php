@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\{User, Post};
+use App\Models\{Comment, User, Post};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

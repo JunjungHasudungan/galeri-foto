@@ -20,14 +20,19 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::resources([
-    'galeri-foto'   => PostController::class,
-    'replies'      => CommentController::class,
-    'likes'        => LikeController::class,
-]);
+Route::middleware(['auth'])->group( function () {
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+    Route::view('profile', 'profile')->name('profile');
+
+    Route::resources([
+        'galeri-foto'   => PostController::class,
+        'replies'      => CommentController::class,
+        'likes'        => LikeController::class,
+    ]);
+});
+
+// Route::view('profile', 'profile')
+//     ->middleware(['auth'])
+//     ->name('profile');
 
 require __DIR__.'/auth.php';

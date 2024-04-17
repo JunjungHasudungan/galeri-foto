@@ -15,10 +15,10 @@ class CommentLikeSeeder extends Seeder
     {
         $commentLikes = [];
 
-        for ($i=0; $i < 14; $i++) { 
+        for ($i=0; $i < 14; $i++) {
             $commentLikes[] = [
                 'comment_id'    => random_int(1, 6),
-                'comment_reply_id'  => random_int(1, 6),
+                'user_id'       => random_int(1, 6),
                 'like'          => (bool)rand(0, 1),
             ];
         }

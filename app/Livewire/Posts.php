@@ -6,12 +6,15 @@ use App\Models\Comment;
 use App\Models\Like;
 use Livewire\Component;
 use App\Models\Post;
+use Livewire\WithFileUploads;
 
 class Posts extends Component
 {
+    use WithFileUploads;
 
     public  $judul,
             $keterangan,
+            $gambar,
             $post,
             $count,
             $listPost,
@@ -23,9 +26,13 @@ class Posts extends Component
             $progress = 0,
             $isCreateReplyPost = false;
 
-            public $message = "Hello World!";
+    public $message = "Hello World!";
 
-         
+
+    protected $rules = [
+        'judul' => 'required',
+        'keterangan'    => 'required'
+    ];
 
     public function render()
     {
@@ -38,14 +45,9 @@ class Posts extends Component
         ]);
     }
 
-    public function updated()
+    public function updated($field)
     {
-        if (! empty($this->konten)) {
-           $this->isDisabled = false;
-        } else {
-            $this->isDisabled = true;
-        }
-
+        $this->resetValidation('judul', 'keterangan');
     }
 
     public function openModalCreate()
@@ -60,14 +62,19 @@ class Posts extends Component
 
     public function closeModalCreateReplyPost()
     {
-        // $this->emit('refreshPost');
-
         $this->isCreateReplyPost = false;
+
+        $this->resetField();
+        $this->resetValidation(['judul', 'keterangan']);
+        // $this->resetValidation('judul', 'keterangan');
     }
 
     public function closeModalCreate()
     {
-        return $this->is_create = false;
+        $this->reset('judul', 'keterangan');
+
+        $this->is_create = false;
+
     }
 
     public function resetField()
@@ -85,9 +92,10 @@ class Posts extends Component
 
     public function createPost()
     {
+        $this->resetField();
+
         $this->openModalCreate();
 
-        $this->resetField();
     }
 
     public function createReplyCommentPost($post_id)
@@ -148,7 +156,33 @@ class Posts extends Component
     }
     public function storePost()
     {
+       $this->validate([
+            'judul'     => 'required|min:3|max:25',
+            'keterangan'    => 'required',
+            'gambar'        => 'nullable|image|max:1024|mimes:jpg,png'
+       ],[
+        'judul.required'    => 'Judul postingan wajib diisi..',
+        'keterangan.required'   => 'Keterangan Postingan wajib diisi..'
+       ]);
 
+    //    $validated = $this->validate();
+    //    if ($this->gambar) {
+    //        $fileName = $this->gambar->getClientOriginalName();
+
+    //     $validated['gambar'] =  $this->gambar->storeAs('images', $fileName, 'public');
+    //    }
+    //    dd($validated['gambar']);
+       Post::create([
+           'judul' => $this->judul,
+           'keterangan'    => $this->keterangan,
+           'gambar'        => $this->gambar,
+           'user_id'       => auth()->user()->id,
+        ]);
+
+       $this->resetField();
+       $this->reset('judul', 'keterangan');
+
+       $this->closeModalCreate();
     }
 
 }

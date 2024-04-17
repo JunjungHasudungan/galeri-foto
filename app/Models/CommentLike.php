@@ -10,11 +10,21 @@ class CommentLike extends Model
     use HasFactory;
 
     protected $table = 'comment_like';
-    
+
     protected $guarded = [];
 
     public function likeCommentReply()
     {
         return $this->hasMany(CommentReply::class);
+    }
+
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

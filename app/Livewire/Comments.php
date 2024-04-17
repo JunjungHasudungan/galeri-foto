@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Comment;
+use App\Models\CommentLike;
 use App\Models\CommentReply;
 use App\Models\Post;
 use App\Models\Reply;
@@ -166,5 +167,33 @@ class Comments extends Component
         $this->resetReplyComment();
 
         $this->closeModalCommentReplyToReply();
+    }
+
+    public function likeComment($id_comment)
+    {
+        $commentLike = CommentLike::where('comment_id', $id_comment)
+                        ->where('user_id', auth()->id())->get();
+
+        // jika tidak ada like pada comment user akan melakukan create likeComment
+        if (count($commentLike) == 0) {
+            CommentLike::create([
+                'comment_id'    => $id_comment,
+                'user_id'       => auth()->id(),
+                'like'          => true,
+            ]);
+        }else {
+            foreach ($commentLike as $item) {
+                $idCommentLike = $item->id;
+            }
+
+            $like = CommentLike::find($idCommentLike);
+            $like->delete();
+
+        }
+    }
+
+    public function likeReplyComment()
+    {
+        dd('like reply comment');
     }
 }
