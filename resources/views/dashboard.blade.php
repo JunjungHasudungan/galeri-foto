@@ -2,7 +2,8 @@
     @php
         $pageTitle = 'Dashboard';
     @endphp
-    <title>{{ $pageTitle }} | {{ config('app.name', 'Laravel') }}</title>
+
+    <title> {{ $pageTitle  }} | {{ config('app.name', 'Laravel') }}</title>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -10,7 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     @livewire('dashboard')
-                    
+
                 </div>
             </div>
         </div>

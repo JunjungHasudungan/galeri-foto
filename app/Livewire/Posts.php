@@ -2,10 +2,10 @@
 
 namespace App\Livewire;
 
-use App\Models\Comment;
-use App\Models\Like;
+use App\Models\{ Comment, Like, Post };
 use Livewire\Component;
-use App\Models\Post;
+use Livewire\Attributes\Rule;
+use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
 class Posts extends Component
@@ -14,7 +14,6 @@ class Posts extends Component
 
     public  $judul,
             $keterangan,
-            $gambar,
             $post,
             $count,
             $listPost,
@@ -25,6 +24,9 @@ class Posts extends Component
             $is_create = false,
             $progress = 0,
             $isCreateReplyPost = false;
+
+    #[Rule('nullable|image|max:1024')]
+    public $gambar;
 
     public $message = "Hello World!";
 
@@ -66,7 +68,6 @@ class Posts extends Component
 
         $this->resetField();
         $this->resetValidation(['judul', 'keterangan']);
-        // $this->resetValidation('judul', 'keterangan');
     }
 
     public function closeModalCreate()
@@ -114,9 +115,9 @@ class Posts extends Component
     public function storeCommentPost($post_id)
     {
         $this->validate([
-            'konten'        => 'required'
+            'konten'        => 'required',
         ], [
-            'konten.required'   => 'Postingan wajib diisi..'
+            'konten.required'   => 'Postingan wajib diisi..',
         ]);
 
         Comment::create([
@@ -156,26 +157,16 @@ class Posts extends Component
     }
     public function storePost()
     {
-       $this->validate([
-            'judul'     => 'required|min:3|max:25',
-            'keterangan'    => 'required',
-            'gambar'        => 'nullable|image|max:1024|mimes:jpg,png'
-       ],[
-        'judul.required'    => 'Judul postingan wajib diisi..',
-        'keterangan.required'   => 'Keterangan Postingan wajib diisi..'
-       ]);
+        $validated = $this->validate();
 
-    //    $validated = $this->validate();
-    //    if ($this->gambar) {
-    //        $fileName = $this->gambar->getClientOriginalName();
+        if ($this->gambar) {
+            $validated['gambar'] = $this->gambar->store('public/images');
+        }
 
-    //     $validated['gambar'] =  $this->gambar->storeAs('images', $fileName, 'public');
-    //    }
-    //    dd($validated['gambar']);
        Post::create([
            'judul' => $this->judul,
            'keterangan'    => $this->keterangan,
-           'gambar'        => $this->gambar,
+           'gambar'        =>  $validated['gambar'],
            'user_id'       => auth()->user()->id,
         ]);
 

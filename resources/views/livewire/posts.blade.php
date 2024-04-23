@@ -23,9 +23,11 @@
     </div>
     <div class="pt-2">
         @forelse ($listPost as $post)
-            <div class="w-full p-4 mb-2 text-start bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="w-full p-4 mb-2 text-start border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex flex-row">
-                    <img class="object-cover w-75 rounded-lg h-45 md:h-45 md:w-48" src="{{ asset('/assets/media/product/books/4.png')}}" alt="">
+                    @if ($post->gambar)
+                        <img class="object-cover w-45 rounded-lg h-25 md:h-25 md:w-48" src="{{ Storage::url($post->gambar) }}" alt="">
+                    @endif
                     <div class="px-2 w-full  flex-col">
                         <div class="space-y-4 mt-2">
                             <a href="{{ route('dashboard') }}" class="mb-8 p-3">
@@ -35,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-5 space-x-4 flex flex-row items-start self-end">
+                <div class="space-x-4 flex flex-row items-start self-end">
                     <div class="flex flex-row space-x-1 p-2">
                         <button
                             wire:click="createReplyCommentPost({{ $post->id }})"
