@@ -162,6 +162,7 @@ class Posts extends Component
         if ($this->gambar) {
             $validated['gambar'] = $this->gambar->store('public/images');
         }
+        // dd($validated['gambar']);
 
        Post::create([
            'judul' => $this->judul,

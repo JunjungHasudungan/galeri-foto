@@ -47,7 +47,6 @@
                             <span class="text-white"></span>
                         </div>
                 </div>
-                
             </div>
         </div>
     @empty

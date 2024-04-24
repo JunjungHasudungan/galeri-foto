@@ -40,8 +40,13 @@
                                 accept="image/png, image/jpeg"
                                 wire:model="gambar">
                     @error('gambar') <span class="text-red-500">{{ $message }}</span>@enderror
-                </div>
-
+                    <div wire:loading wire:target="gambar" class="text-emerald-400 font-semibold">Uploading...</div>
+                        @if ($gambar)
+                            <div class="mt-2">
+                                <img src="{{ $gambar->temporaryUrl() }}" class="w-20 h-20 rounded-lg">
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
 
