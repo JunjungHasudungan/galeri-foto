@@ -12,31 +12,81 @@
             @include('livewire.pages.posts._modalCreatePost')
         @endif
 
+        @if ($is_edit)
+            @include('livewire.pages.posts._modalEditPost')
+        @endif
+
         @if ($isCreateReplyPost)
 
             @include('livewire.pages.posts._modalCreatePostComment')
         @endif
-
-        {{-- <div class="mb-2 p-4">
-            @include('livewire.components.search-input')
-        </div> --}}
     </div>
     <div class="pt-2">
-        @forelse ($listPost as $post)
+                @forelse ($listPost as $post)
             <div class="w-full p-4 mb-2 text-start border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+                <div x-data="{ open: false }" class="">
+                    <!-- Primary Navigation Menu -->
+                    <div class="max-w-7xl mx-auto px-4 sm:px-4 lg:px-4">
+                        <div class="flex justify-between h-8">
+                            <div class="flex">
+
+                                <!-- Navigation Links -->
+                                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                </div>
+                            </div>
+
+                            <!-- Settings Dropdown -->
+                            <div class="hidden sm:flex sm:items-center sm:ms-6 dark:bg-gray-800">
+                                <x-dropdown align="right" width="48" class="dark:bg-gray-800">
+                                    <x-slot name="trigger">
+                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <div class="ms-1">
+                                                <svg class="w-6 h-6 text-gray-800 dark:text-white absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6h.01M12 12h.01M12 18h.01"/>
+                                                </svg>
+                                            </div>
+                                        </button>
+                                    </x-slot>
+
+                                    <x-slot name="content" class="dark:bg-gray-800">
+                                        <!-- Authentication -->
+                                        <button class="w-full text-start dark:bg-gray-800">
+                                            <ul class="py-2 dark:bg-gray-800" aria-labelledby="dropdownButton">
+                                                <li>
+                                                    <a href="#" wire:click="editPost({{ $post->id }})" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                        Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"  wire:click="deletePost({{ $post->id }})" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                        Delete
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </button>
+                                    </x-slot>
+                                </x-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex flex-row">
                     @if ($post->gambar)
                         <img class="object-cover w-45 rounded-lg h-25 md:h-25 md:w-48" src="{{ Storage::url($post->gambar) }}" alt="">
                     @endif
-                    <div class="px-2 w-full  flex-col">
-                        <div class="space-y-4 mt-2">
-                            <a href="{{ route('dashboard') }}" class="mb-8 p-3">
+                    <div class="px-1 w-full  flex-col">
+
+                        <div class="space-y-1">
+                            <div class="mb-8 p-3">
                                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $post->user->name }} . {{ \Carbon\Carbon::parse($post->created_at)->translatedFormat('j M') }} </p>
                                 <h5 class="text-sm tracking-tight text-semibold text-gray-400"> {{ $post->keterangan }} </h5>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="space-x-4 flex flex-row items-start self-end">
                     <div class="flex flex-row space-x-1 p-2">
                         <button

@@ -22,8 +22,10 @@ class Posts extends Component
             $user_id,
             $isDisabled = true,
             $is_create = false,
+            $isOpen = false,
             $progress = 0,
-            $isCreateReplyPost = false;
+            $isCreateReplyPost = false,
+            $is_edit = false;
 
     #[Rule('nullable|image|max:1024')]
     public $gambar;
@@ -177,4 +179,59 @@ class Posts extends Component
        $this->closeModalCreate();
     }
 
+    public function toggleDropdown($post_id)
+    {
+        // dd($post_id);
+        $post = Post::where('id', $post_id)->first();
+
+        if ($post_id == $post['id']) {
+            // dd($post);
+            $this->isOpen = true;
+        }
+        // $this->isOpen[$post_id] = !$this->isOpen[$post_id];
+    }
+
+    public function openModalEdit()
+    {
+        $this->is_edit = true;
+    }
+
+    public function closeModalEdit()
+    {
+        $this->is_edit = false;
+    }
+
+    public function editPost(Post $post)
+    {
+        $this->openModalEdit();
+
+        $this->post = $post;
+        $this->judul = $post->judul;
+        $this->keterangan =$post->keterangan;
+        $this->gambar = $post->gambar;
+    }
+
+    public function updatePost(Post $post)
+    {
+        $this->validate([
+            'judul' => 'required|min:2',
+            'keterangan'    => 'required|min:10',
+        ]);
+
+        $post->update([
+            'judul' => $this->judul,
+            'keterangan'    => $this->keterangan,
+        ]);
+
+        $this->reset(['judul', 'keterangan']);
+
+        $this->reset(['judul', 'keterangan']);
+
+        $this->closeModalEdit();
+    }
+
+    public function deletePost(Post $post)
+    {
+        $post->delete();
+    }
 }
